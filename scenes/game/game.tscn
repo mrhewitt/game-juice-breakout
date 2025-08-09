@@ -1,8 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://c1cvnrsabg3s1"]
+[gd_scene load_steps=18 format=3 uid="uid://c1cvnrsabg3s1"]
 
 [ext_resource type="PackedScene" uid="uid://dyy7lp07carkr" path="res://scenes/paddle/paddle.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://cvg0cmgxvdkk0" path="res://scenes/ball/ball.tscn" id="2"]
-[ext_resource type="Script" path="res://scenes/game/scripts/game.gd" id="3"]
+[ext_resource type="Script" uid="uid://dvgudurukdrxt" path="res://scenes/game/scripts/game.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://stcivysk52ie" path="res://scenes/brick/brick.tscn" id="4"]
 [ext_resource type="FontFile" uid="uid://br01odh1twpni" path="res://shared/fonts/aldo_the_apache/AldotheApache.ttf" id="4_lbq23"]
 [ext_resource type="PackedScene" uid="uid://c48m66isx4utm" path="res://scenes/ui/energy_bar/energy_bar.tscn" id="5"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cca2cimj26xys" path="res://scenes/game/visuals/walls.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://dds87jvstluyg" path="res://scenes/game/visuals/background.png" id="8"]
 [ext_resource type="Texture2D" uid="uid://sh7g4gfmqe73" path="res://scenes/game/visuals/pattern.png" id="9"]
+[ext_resource type="Script" uid="uid://2xbvtlvj4rsx" path="res://scenes/game/scripts/camera_final.gd" id="9_5jirj"]
 [ext_resource type="PackedScene" uid="uid://cn3a4bs7x53tq" path="res://scenes/ui/score/score.tscn" id="10_lkj00"]
 
 [sub_resource type="Shader" id="6"]
@@ -31,10 +32,10 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="7"]
 shader = SubResource("6")
+shader_parameter/pattern = ExtResource("9")
 shader_parameter/speed = 0.3
 shader_parameter/size_scale = 30.0
 shader_parameter/color = Color(0.74902, 0.74902, 0.74902, 0.254902)
-shader_parameter/pattern = ExtResource("9")
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(1920, 80)
@@ -223,11 +224,16 @@ size = 1
 position = Vector2(960, 990)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(960, 540)
+script = ExtResource("9_5jirj")
+dynamic_enabled = true
+dynamic_factor = 0.3
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="HUDCanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
-[node name="EnergyBar" parent="CanvasLayer" instance=ExtResource("5")]
+[node name="EnergyBar" parent="HUDCanvasLayer" instance=ExtResource("5")]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -240,7 +246,7 @@ offset_bottom = 128.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="HealthBar" parent="CanvasLayer" instance=ExtResource("6")]
+[node name="HealthBar" parent="HUDCanvasLayer" instance=ExtResource("6")]
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -250,7 +256,7 @@ offset_right = 87.0
 offset_bottom = 128.0
 grow_vertical = 2
 
-[node name="Score" parent="CanvasLayer" instance=ExtResource("10_lkj00")]
+[node name="Score" parent="HUDCanvasLayer" instance=ExtResource("10_lkj00")]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -259,6 +265,8 @@ offset_top = -14.0
 offset_right = 178.5
 offset_bottom = 98.0
 grow_horizontal = 2
+
+[node name="UICanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ComboTimer" type="Timer" parent="."]
 one_shot = true
