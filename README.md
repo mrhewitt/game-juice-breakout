@@ -7,3 +7,5 @@ Project used during course on adding effects to games: [Learn how to make a juic
 Godot 4 Tweening Cheat Sheet
 
 [Tween Cheat Sheet](https://www.reddit.com/r/godot/comments/frqzup/godot_tweening_cheat_sheet/)
+
+[Tween Visual Tool](https://freetimedev.itch.io/godot-tween-cheatsheet)
